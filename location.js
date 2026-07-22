@@ -23,7 +23,7 @@
     const selector=document.createElement('div');
     selector.className='hero-location';
     selector.id='location-selector';
-    selector.setAttribute('aria-label','Choose House of Saara location');
+    selector.setAttribute('aria-label','Choose House of SARA location');
     selector.innerHTML=`
       <div class="hero-location-copy">
         <span>Choose your House</span>
@@ -69,7 +69,7 @@
   let selectedLocation='Bangalore';
 
   try{
-    const saved=localStorage.getItem('houseOfSaaraLocation');
+    const saved=localStorage.getItem('houseOfSaraLocation');
     if(saved&&locations[saved])selectedLocation=saved;
   }catch{}
 
@@ -98,7 +98,7 @@
     if(hiddenInput)hiddenInput.value=location;
     document.documentElement.dataset.houseLocation=location.toLowerCase();
     if(persist){
-      try{localStorage.setItem('houseOfSaaraLocation',location)}catch{}
+      try{localStorage.setItem('houseOfSaraLocation',location)}catch{}
     }
   }
 
