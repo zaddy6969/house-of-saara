@@ -1,10 +1,16 @@
-# House of Saara
+# House of SARA
 
-Premium, responsive one-page catering website for **House of Saara**.
+Premium, responsive one-page catering website for **House of SARA**.
+
+## Contact
+
+- Email: houseofsara001@gmail.com
+- Phone: 8105812327
 
 ## Included
 
 - Editorial ivory visual system
+- Bangalore and Lavelam location selector
 - Wedding, private celebration and corporate catering sections
 - Interactive menu concepts
 - Intentionally empty Vegetarian collection for later curation
