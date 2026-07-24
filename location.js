@@ -9,31 +9,18 @@
 
   const nav=document.querySelector('[data-nav]');
   const navCta=nav?.querySelector('.nav-cta');
-  if(nav&&navCta&&!nav.querySelector('[data-location-jump]')){
-    const headerLocation=document.createElement('button');
-    headerLocation.className='header-location';
-    headerLocation.type='button';
-    headerLocation.dataset.locationJump='';
-    headerLocation.innerHTML='<span class="header-location-label">Location</span><strong data-location-current>Bangalore</strong>';
-    nav.insertBefore(headerLocation,navCta);
-  }
-
-  const heroIntro=document.querySelector('.hero-intro');
-  if(heroIntro&&!document.querySelector('#location-selector')){
+  if(nav&&navCta&&!nav.querySelector('.header-location-switch')){
     const selector=document.createElement('div');
-    selector.className='hero-location';
-    selector.id='location-selector';
-    selector.setAttribute('aria-label','Choose House of SARA location');
+    selector.className='header-location-switch';
+    selector.setAttribute('role','group');
+    selector.setAttribute('aria-label','Choose service location');
     selector.innerHTML=`
-      <div class="hero-location-copy">
-        <span>Choose your House</span>
-        <strong data-location-current>Bangalore</strong>
-      </div>
-      <div class="location-options" role="group" aria-label="Locations">
-        <button type="button" data-location="Bangalore" aria-pressed="true">Bangalore</button>
-        <button type="button" data-location="Lavelam" aria-pressed="false">Lavelam</button>
+      <span class="header-location-title">Location</span>
+      <div class="header-location-options">
+        <button type="button" data-location="Bangalore" aria-pressed="true">BANGALORE</button>
+        <button type="button" data-location="Lonavala" aria-pressed="false">LONAVALA</button>
       </div>`;
-    heroIntro.insertAdjacentElement('afterend',selector);
+    nav.insertBefore(selector,navCta);
   }
 
   const heroEyebrow=document.querySelector('.hero .eyebrow.light');
@@ -58,19 +45,26 @@
 
   const locations={
     Bangalore:{eyebrow:'BANGALORE · DESTINATION EVENTS',footer:'Serving Bangalore and destination events'},
-    Lavelam:{eyebrow:'LAVELAM · DESTINATION EVENTS',footer:'Serving Lavelam and destination events'}
+    Lonavala:{eyebrow:'LONAVALA · DESTINATION EVENTS',footer:'Serving Lonavala and destination events'}
   };
+
+  const metaDescription=document.querySelector('meta[name="description"]');
+  if(metaDescription){
+    metaDescription.content=metaDescription.content.replace(/Lavelam/gi,'Lonavala');
+  }
+
   const locationButtons=[...document.querySelectorAll('[data-location]')];
   const currentLabels=[...document.querySelectorAll('[data-location-current]')];
   const eyebrow=document.querySelector('[data-location-eyebrow]');
   const footer=document.querySelector('[data-location-footer]');
   const hiddenInput=document.querySelector('[data-house-location-input]');
-  const selector=document.querySelector('#location-selector');
+  const headerSelector=document.querySelector('.header-location-switch');
   let selectedLocation='Bangalore';
 
   try{
     const saved=localStorage.getItem('houseOfSaraLocation');
-    if(saved&&locations[saved])selectedLocation=saved;
+    if(saved==='Lavelam')selectedLocation='Lonavala';
+    else if(saved&&locations[saved])selectedLocation=saved;
   }catch{}
 
   function animateLabel(element){
@@ -107,8 +101,8 @@
   document.querySelectorAll('[data-location-jump]').forEach(button=>button.addEventListener('click',()=>{
     document.body.classList.remove('nav-open');
     document.querySelector('[data-menu-toggle]')?.setAttribute('aria-expanded','false');
-    selector?.scrollIntoView({behavior:'smooth',block:'center'});
-    window.setTimeout(()=>document.querySelector(`[data-location="${selectedLocation}"]`)?.focus(),550);
+    headerSelector?.scrollIntoView({behavior:'smooth',block:'start'});
+    window.setTimeout(()=>document.querySelector(`[data-location="${selectedLocation}"]`)?.focus(),450);
   }));
 
   form?.addEventListener('submit',()=>{
